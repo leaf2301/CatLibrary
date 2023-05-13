@@ -7,20 +7,20 @@
 
 import Foundation
 
-struct CatModel: Codable, CustomStringConvertible, Identifiable {
-    let id, name: String
-    let temperament: String
-    let origin: String
-    let description: String
-    let lifeSpan: String
-    let affectionLevel, childFriendly: Int
-    let energyLevel: Int
-    let isHairless: Bool
-    let image: CatImage?
+struct CatModel: Codable, Identifiable {
+    var id, name: String
+    var temperament: String
+    var origin: String
+    var description: String
+    var lifeSpan: String
+    var affectionLevel, childFriendly: Int
+    var energyLevel: Int
+    var isHairless: Bool
+    var image: CatImage?
     
-    var shortDescription: String {
-        return "Cat's Name: \(name) and id: \(id), origin: \(origin), description: \(description), life span :\(lifeSpan), energy level: \(energyLevel), isHairless: \(isHairless ? "YES" : "NO")."
-    }
+//    var shortDescription: String {
+//        return "Cat's Name: \(name) and id: \(id), origin: \(origin), description: \(description), life span :\(lifeSpan), energy level: \(energyLevel), isHairless: \(isHairless ? "YES" : "NO")."
+//    }
     
     /*
      let countryCodes, countryCode: String
@@ -86,6 +86,22 @@ struct CatModel: Codable, CustomStringConvertible, Identifiable {
         description = try values.decode(String.self, forKey: .description)
         image = try values.decodeIfPresent(CatImage.self, forKey: .image)
     }
+    
+    init(id: String, name: String, origin: String, lifeSpan: String, affectionLevel: Int, childFriendly: Int, energyLevel: Int, isHairless: Bool, temperament: String, description: String, image: CatImage?) {
+        self.id = id
+        self.name = name
+        self.origin = origin
+        self.lifeSpan = lifeSpan
+        self.affectionLevel = affectionLevel
+        self.childFriendly = childFriendly
+        self.energyLevel = energyLevel
+        self.isHairless = isHairless
+        self.temperament = temperament
+        self.description = description
+        self.image = image
+    }
+    
+    static let example = CatModel(id: "abys", name: "Abyssinian", origin: "Egypt", lifeSpan: "14 - 15", affectionLevel: 5, childFriendly: 3, energyLevel: 5, isHairless: true, temperament: "", description: "The Abyssinian is easy to care for, and a joy to have in your home. They’re affectionate cats and love both people and other animals.", image: nil)
     
 }
 
