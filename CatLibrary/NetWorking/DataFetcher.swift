@@ -7,36 +7,34 @@
 
 import Foundation
 
+@MainActor
 class DataFetcher: ObservableObject {
     @Published var breeds = [CatModel]()
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
-    
+    private let url = URL(string: "https://api.thecatapi.com/v1/breeds")
+   
     init() {
-        Task {
-            await fetchData()
-        }
+        fetchData()
     }
     
-    func fetchData() async {
-        guard let url = URL(string: "https://api.thecatapi.com/v1/breeds?limit=9") else {
-            print("Bad URL")
-            return
-        }
+    
+    func fetchData()  {
+        isLoading = false
+        errorMessage = nil
         
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            let items = try JSONDecoder().decode([CatModel].self, from: data)
-            await MainActor.run {
-                self.breeds = items
-            }
-            print(items)
-
-        } catch {
+        let service = APIService()
+        service.fetchData1(url: url) { [weak self] result in
             
-            print("Error")
+            self?.isLoading = true
+            switch result {
+            case .failure(let error):
+                self?.errorMessage = error.localizedDescription
+            case .success(let breeds):
+                self?.breeds = breeds
+                print(breeds)
+            }
         }
-        
         
     }
     
