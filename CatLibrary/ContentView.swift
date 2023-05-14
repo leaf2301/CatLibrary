@@ -12,14 +12,12 @@ struct ContentView: View {
     
     
     var body: some View {
-        List {
-            ForEach(vm.breeds) { breed in
-                VStack {
-                    Text(breed.name)
-                    Text(breed.lifeSpan)
-                    Text(breed.description)
-                }
-            }
+        if vm.isLoading {
+            LoadingView()
+        } else if vm.errorMessage != nil {
+            ErrorView(vm: vm)
+        } else {
+            CatList(breeds: vm.breeds)
         }
     }
 }

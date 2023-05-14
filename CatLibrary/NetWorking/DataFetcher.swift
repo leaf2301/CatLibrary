@@ -7,7 +7,6 @@
 
 import Foundation
 
-@MainActor
 class DataFetcher: ObservableObject {
     @Published var breeds = [CatModel]()
     @Published var isLoading: Bool = false
@@ -18,24 +17,37 @@ class DataFetcher: ObservableObject {
         fetchData()
     }
     
-    
     func fetchData()  {
         isLoading = false
         errorMessage = nil
         
         let service = APIService()
         service.fetchData1(url: url) { [weak self] result in
-            
-            self?.isLoading = true
-            switch result {
-            case .failure(let error):
-                self?.errorMessage = error.localizedDescription
-            case .success(let breeds):
-                self?.breeds = breeds
-                print(breeds)
+            DispatchQueue.main.async {
+                
+                self?.isLoading = true
+                switch result {
+                case .failure(let error):
+                    self?.errorMessage = error.localizedDescription
+                case .success(let breeds):
+                    self?.breeds = breeds
+                }
             }
         }
         
     }
+    
+    static func successState() -> DataFetcher {
+        let fetcher = DataFetcher()
+        fetcher.breeds = [CatModel.example]
+        return fetcher
+    }
+    
+    static func errorState() -> DataFetcher {
+        let fetcher = DataFetcher()
+        fetcher.errorMessage = APIError.badURL.userLocalizedDescription
+        return fetcher
+    }
+    
     
 }

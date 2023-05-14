@@ -101,7 +101,7 @@ struct CatModel: Codable, Identifiable {
         self.image = image
     }
     
-    static let example = CatModel(id: "abys", name: "Abyssinian", origin: "Egypt", lifeSpan: "14 - 15", affectionLevel: 5, childFriendly: 3, energyLevel: 5, isHairless: true, temperament: "", description: "The Abyssinian is easy to care for, and a joy to have in your home. They’re affectionate cats and love both people and other animals.", image: nil)
+    static let example = CatModel(id: "abys", name: "Abyssinian", origin: "Egypt", lifeSpan: "14 - 15", affectionLevel: 5, childFriendly: 3, energyLevel: 5, isHairless: true, temperament: "Active, Energetic, Independent, Intelligent, Gentle", description: "The Abyssinian is easy to care for, and a joy to have in your home. They’re affectionate cats and love both people and other animals.", image: nil)
     
 }
 
