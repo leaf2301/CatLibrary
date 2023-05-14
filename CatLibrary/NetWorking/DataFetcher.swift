@@ -17,20 +17,20 @@ class DataFetcher: ObservableObject {
         fetchData()
     }
     
-    func fetchData()  {
-        isLoading = false
-        errorMessage = nil
+    func fetchData() {
+        self.isLoading = true
+        self.errorMessage = nil
         
         let service = APIService()
         service.fetchData1(url: url) { [weak self] result in
             DispatchQueue.main.async {
-                
-                self?.isLoading = true
+                self?.isLoading = false
                 switch result {
                 case .failure(let error):
                     self?.errorMessage = error.localizedDescription
                 case .success(let breeds):
                     self?.breeds = breeds
+                    print(breeds)
                 }
             }
         }

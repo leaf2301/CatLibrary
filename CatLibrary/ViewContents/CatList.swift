@@ -10,11 +10,21 @@ import SwiftUI
 struct CatList: View {
     let breeds: [CatModel]
     
+    @State private var searchText: String = ""
+    var filterBreed: [CatModel] {
+        if searchText.count == 0 {
+            return breeds
+        } else {
+            return breeds.filter{ $0.name.contains(searchText)}
+        }
+    }
+
+    
     
     var body: some View {
-        ScrollView {
+        NavigationView {
             List {
-                ForEach(breeds) { breed in
+                ForEach(filterBreed) { breed in
                     NavigationLink {
                         DetailView(breed: CatModel.example)
                     } label: {
@@ -22,13 +32,12 @@ struct CatList: View {
                     }
                     
                 }
+                }
             }
-        }
     }
 }
 
 struct CatList_Previews: PreviewProvider {
-    
     
     static var previews: some View {
         CatList(breeds: DataFetcher.successState().breeds)

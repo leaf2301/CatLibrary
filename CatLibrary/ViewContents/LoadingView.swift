@@ -31,6 +31,7 @@ struct LoadingView: View {
                     .padding()
                 
                 Text("The cat library is prepared ...".uppercased())
+                    .bold()
                 
             }
         }
