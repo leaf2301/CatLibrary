@@ -13,8 +13,8 @@ struct CatItem: View {
     
     var body: some View {
         HStack {
-            if breed.image?.url != nil {
-                AsyncImage(url: URL(string: breed.image!.url!)) { phase in
+            if breed.referenceId != nil {
+                AsyncImage(url: URL(string: try! getImage())) { phase in
                     if let image = phase.image {
                         image
                             .resizable()
@@ -44,6 +44,16 @@ struct CatItem: View {
                 Text(breed.temperament)
             }
         }
+    }
+    
+    func getImage() throws -> String {
+        if let id = breed.referenceId {
+            let url = "https://cdn2.thecatapi.com/images/" + "\(id)" + ".jpg"
+            
+            return url
+        }
+        
+        throw URLError(.badURL)
     }
 }
 

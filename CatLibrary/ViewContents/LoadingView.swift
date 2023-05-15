@@ -17,23 +17,25 @@ struct LoadingView: View {
                 .ignoresSafeArea()
             
             VStack {
-                Spacer()
-                Text("😻")
-                    .font(.system(size: 80))
-                    .padding(.vertical, animate ? 30 : 50)
-                    .shadow(color: animate ? Color.gray.opacity(0.5) : Color.gray.opacity(0.1), radius: animate ? 30 : 10, x: 0, y: 50)
-                    .scaleEffect(animate ? 2.0  : 0.9)
-                    .offset(y: animate ? -7 : 0)
-                    .onAppear(perform: addAnimation)
+                GeometryReader { geo in
+                    Text("😻")
+                        .font(.system(size: 80))
+                        .padding(.vertical, animate ? 30 : 50)
+                        .shadow(color: animate ? Color.gray.opacity(0.5) : Color.gray.opacity(0.1), radius: animate ? 30 : 10, x: 0, y: 50)
+                        .scaleEffect(animate ? 2.0  : 0.9)
+                        .offset(y: animate ? -7 : 0)
+                        .frame(width: geo.size.width * 1)
+                        .frame(height: (geo.size.height) * 1.1)
+                        .onAppear(perform: addAnimation)
+                    
+                }
 
-                Spacer()
-                ProgressView()
-                    .padding()
-                
-                Text("The cat library is prepared ...".uppercased())
-                    .bold()
-                
-            }
+                    ProgressView()
+                    .padding(.horizontal)
+                    Text("The cat library is prepared ...".uppercased())
+                        .padding()
+                        .bold()
+                }
         }
     }
     

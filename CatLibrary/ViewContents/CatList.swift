@@ -18,23 +18,24 @@ struct CatList: View {
             return breeds.filter{ $0.name.contains(searchText)}
         }
     }
-
-    
-    
     var body: some View {
         NavigationView {
             List {
                 ForEach(filterBreed) { breed in
                     NavigationLink {
-                        DetailView(breed: CatModel.example)
+                        DetailView(breed: breed)
                     } label: {
-                        CatItem(breed: CatModel.example)
+                        CatItem(breed: breed)
                     }
                     
                 }
-                }
             }
+            .listStyle(.plain)
+            .navigationTitle("Find Your PerFect Cat")
+            .searchable(text: $searchText)
+        }
     }
+    
 }
 
 struct CatList_Previews: PreviewProvider {

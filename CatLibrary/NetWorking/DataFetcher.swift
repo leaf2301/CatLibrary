@@ -24,13 +24,13 @@ class DataFetcher: ObservableObject {
         let service = APIService()
         service.fetchData1(url: url) { [weak self] result in
             DispatchQueue.main.async {
-                self?.isLoading = false
                 switch result {
                 case .failure(let error):
                     self?.errorMessage = error.localizedDescription
                 case .success(let breeds):
                     self?.breeds = breeds
-                    print(breeds)
+                    self?.isLoading = false
+                   // print(breeds)
                 }
             }
         }

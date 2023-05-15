@@ -8,6 +8,21 @@
 import Foundation
 
 struct CatModel: Codable, Identifiable {
+    /*
+     "image": {
+        "height": 1445,
+        "id": "0XYvRd7oD",
+        "url": "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg",
+        "width": 1204
+     */
+
+    struct CatImage: Codable {
+        let height: Int?
+        let id: String?
+        let url: String?
+        let width: Int?
+    }
+
     var id, name: String
     var temperament: String
     var origin: String
@@ -17,6 +32,7 @@ struct CatModel: Codable, Identifiable {
     var energyLevel: Int
     var isHairless: Bool
     var image: CatImage?
+    var referenceId: String?
     
 //    var shortDescription: String {
 //        return "Cat's Name: \(name) and id: \(id), origin: \(origin), description: \(description), life span :\(lifeSpan), energy level: \(energyLevel), isHairless: \(isHairless ? "YES" : "NO")."
@@ -46,6 +62,7 @@ struct CatModel: Codable, Identifiable {
         case energyLevel = "energy_level"
         case isHairless = "hairless"
         case image
+        case referenceId = "reference_image_id"
         
         /*
          case countryCodes = "country_codes"
@@ -85,9 +102,10 @@ struct CatModel: Codable, Identifiable {
         temperament = try values.decode(String.self, forKey: .temperament)
         description = try values.decode(String.self, forKey: .description)
         image = try values.decodeIfPresent(CatImage.self, forKey: .image)
+        referenceId = try values.decodeIfPresent(String.self, forKey: .referenceId)
     }
     
-    init(id: String, name: String, origin: String, lifeSpan: String, affectionLevel: Int, childFriendly: Int, energyLevel: Int, isHairless: Bool, temperament: String, description: String, image: CatImage?) {
+    init(id: String, name: String, origin: String, lifeSpan: String, affectionLevel: Int, childFriendly: Int, energyLevel: Int, isHairless: Bool, temperament: String, description: String, image: CatImage?, referenceId: String?) {
         self.id = id
         self.name = name
         self.origin = origin
@@ -99,9 +117,10 @@ struct CatModel: Codable, Identifiable {
         self.temperament = temperament
         self.description = description
         self.image = image
+        self.referenceId = referenceId
     }
     
-    static let example = CatModel(id: "abys", name: "Abyssinian", origin: "Egypt", lifeSpan: "14 - 15", affectionLevel: 5, childFriendly: 3, energyLevel: 5, isHairless: true, temperament: "Active, Energetic, Independent, Intelligent, Gentle", description: "The Abyssinian is easy to care for, and a joy to have in your home. They’re affectionate cats and love both people and other animals.", image: nil)
+    static let example = CatModel(id: "abys", name: "Abyssinian", origin: "Egypt", lifeSpan: "14 - 15", affectionLevel: 5, childFriendly: 3, energyLevel: 5, isHairless: true, temperament: "Active, Energetic, Independent, Intelligent, Gentle", description: "The Abyssinian is easy to care for, and a joy to have in your home. They’re affectionate cats and love both people and other animals.", image: nil, referenceId: "0XYvRd7oD")
     
 }
 
